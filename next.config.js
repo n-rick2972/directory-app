@@ -1,9 +1,5 @@
 /**
  * @type { import("next").NextConfig}
  */
-const config = {
-  experimental: {
-    swcMinify: true,
-  },
-};
+const config = {};
 module.exports = config;
