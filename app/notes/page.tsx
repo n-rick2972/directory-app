@@ -8,6 +8,7 @@ import "server-only";
 import NoteList from "./NoteList";
 import { zNotes } from "./type";
 
+// 1. 静的/動的レンダリングや再生成の間隔を指定
 export const revalidate = 0;
 
 export const metadata = {
@@ -15,6 +16,7 @@ export const metadata = {
 };
 
 export default async function Page() {
+  // 2. APIを用いたデータ取得
   const notes = await getNotes();
   return (
     <main className="mx-2 sm:mx-4 relative">
@@ -39,6 +41,7 @@ export default async function Page() {
         <span className="sr-only">New Note</span>
       </Link>
       <h2 className="mb-6 text-gray-400 text-xs">List Notes</h2>
+      {/* 3. Client ComponentsのSuspenseの使用 */}
       <ErrorBoundary fallback={<FetchError />}>
         <Suspense fallback={<Loading />}>
           <NoteList initialState={notes} />
