@@ -6,10 +6,8 @@ import { z } from "zod";
 
 const NewNote: React.FC = () => {
   const router = useRouter();
-  // 1. フォームの入力値を管理するためのstate
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  // 2. 作成APIを呼び出す関数
   const createNote = useCallback(async () => {
     const res = await fetch(`/api/notes`, {
       method: "POST",
@@ -21,9 +19,7 @@ const NewNote: React.FC = () => {
     if (res.ok) {
       const id = z.number().parse(await res.json());
       alert("Note created");
-      // 詳細ページが実装されたら、詳細ページに遷移するようにする
       router.push(`/notes`);
-      // 3. 現在のページのデータをサーバーから再取得する
       router.refresh();
     } else {
       alert("Note failed to create");
