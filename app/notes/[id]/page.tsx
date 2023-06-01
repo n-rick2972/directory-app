@@ -5,7 +5,6 @@ import Note from "./Note";
 
 export const revalidate = 0;
 
-// ページのメタデータを動的に取得
 export async function generateMetadata({
   params,
 }: {

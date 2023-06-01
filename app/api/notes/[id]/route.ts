@@ -2,10 +2,6 @@ import { zUpsertNote } from "@/app/notes/type";
 import { prisma } from "@/globals/db";
 import { NextRequest, NextResponse } from "next/server";
 
-// /api/notes/[id]/route.ts
-// ノートのIDはパスパラメーター`[id]`で受け取る
-
-// ノートを1件取得
 export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } }
@@ -19,7 +15,6 @@ export async function GET(
   return NextResponse.json(note);
 }
 
-// ノートを更新
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -28,12 +23,15 @@ export async function PUT(
   const parcedData = zUpsertNote.parse(data);
   const note = await prisma.note.update({
     where: { id: Number(params.id) },
-    data: { title: parcedData.title, body: parcedData.body },
+    data: {
+      title: parcedData.title,
+      body: parcedData.body,
+      updatedAt: new Date(),
+    },
   });
   return new NextResponse(null, { status: 204 });
 }
 
-// ノートを削除
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
